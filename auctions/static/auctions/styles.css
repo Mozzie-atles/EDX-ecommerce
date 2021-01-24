@@ -1,0 +1,22 @@
+body {
+    padding: 10px;;
+}
+
+.flexbox{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex: auto; 
+    margin-bottom: 10px; 
+    border: solid lightblue; 
+    padding: 10px;
+}
+.container {
+    align-items: left;
+    display: flex;
+    flex-direction: column;
+    flex: auto; 
+    margin-bottom: 10px; 
+    border: solid lightblue; 
+    padding: 10px;
+}

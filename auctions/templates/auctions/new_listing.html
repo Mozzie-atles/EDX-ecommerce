@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+new listing
+{% endblock title %}
+{% block part %}
+<span class="badge badge-pill badge-info">{{ count }}</span>
+{% endblock part %}
+
+{% block body %}
+
+<div>
+
+    <form action="{% url 'new_listing' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group"><input type="text" name="newtitle" placeholder="Enter a title">
+        </div>
+        <div class="form-group"><textarea class="form-control" name="descript" id="" cols="30" rows="10"
+                placeholder="Description box"></textarea></div>
+        <div class="form-group"><input class="form-control" type="number" name="newbid" placeholder="Place bids"></div>
+        <div class="form-group">
+            <input type="text" name="tag" placeholder="Add tag">
+        </div>
+        <div class="form-group">
+            <label for="image">Select a file:</label>
+            <input type="file" name="image" id="image">
+        </div>
+        <div><input type="submit" class="btn btn-dark" value="Save"></div>
+    </form>
+</div>
+
+
+
+
+
+
+
+{% endblock body %}

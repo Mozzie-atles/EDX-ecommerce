@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block part %}
+<span class="badge badge-pill badge-info">{{ count }}</span>
+{% endblock part %}
+{% block body %}
+<h2>Active Listings</h2>
+
+
+{% for auction in auctions %}
+<form action="{% url 'auctionpage' %}" method="GET">
+    <div class="card" style="width: 30rem;float: left;padding: 10px;">
+        <img src="media/{{ auction.image }}" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">{{auction.title}}</h5>
+            <p class="card-text">{{auction.description}}</p>
+            <p class="card-text">Starter Bid : {{auction.starter_bid}} $</p>
+            <input type="hidden" value="{{ auction.id }}" name="hidden"></input>
+            <input type="submit" value="view more" class="btn btn-dark">
+        </div>
+    </div>
+</form>
+{% empty %}
+<h3>
+    <p>No auctions at the moment</p>
+</h3>
+{% endfor %}
+{% endblock %}

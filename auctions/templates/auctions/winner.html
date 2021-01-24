@@ -1,0 +1,8 @@
+{% extends "auctions/layout.html" %}
+{% block title %}
+{{ aution.title }}'s winner
+{% endblock title %}
+
+{% block body %}
+congrat's to {{ user.username }} won the auction by {{ highest }}
+{% endblock body %}

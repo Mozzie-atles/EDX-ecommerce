@@ -1,0 +1,80 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+{{ aution.title }}
+{% endblock title %}
+{% block part %}
+<span class="badge badge-pill badge-info">{{ count }}</span>
+{% endblock part %}
+
+{% block body %}
+<h1>{{ auction.title }}</h1>
+
+{% for tip in tags %}
+<form action="{% url 'tags' %}" method="GET">
+    <h5><input type="hidden" value="{{ tip.tags }}" name="tagname">
+        <input type="submit" value="{{ tip.tags }}" class="btn btn-info btn-lg" style="font-size: small;"></h5>
+</form>
+{% endfor %}
+
+<div class="flexbox">
+    <img src="media/{{ auction.image }}" class="card-img-top" style="width: 30%;">
+    <h4>Bid starts at {{ auction.starter_bid }} $</h4>
+    <h4>Highest bid a.t.m {{ bid.lastbid }} $</h4>
+    <h5>
+        <p>{{ auction.description }}</p>
+    </h5>
+</div>
+<div class="flexbox">
+    {% if user.is_authenticated %}
+    {% if auction.user == user %}
+    <form action="{% url 'close' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="auctionid" value="{{ auction.id }}">
+        <input type="submit" value="Close auction">
+    </form>
+    {% else %}
+    <form action="{% url 'auctionpage' %}" method="POST">
+        {% csrf_token %}
+        {% if check == 2 %}
+        <div class="alert alert-primary" role="alert">
+            You must bid higher then {{ bid.lastbid }} $
+        </div>
+        {% endif %}
+        <input type="number" name="newbid">
+        <input type="hidden" name="auctionid" value="{{ auction.id }}">
+        <input type="submit" value="Place bid">
+    </form>
+    {% endif %}
+    <form action="{% url 'watchlist' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" value="{{ auction.id }}" name="content">
+        {% if check == 1 %}
+        <div class="alert alert-primary" role="alert">
+            This entry already exists
+        </div>
+        {% endif %}
+        <input type="submit" value="Add to my watchlist" class="btn btn-dark">
+    </form>
+    <form action="{% url 'comment' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <input type="hidden" value="{{ auction.id }}" name="content">
+            <textarea name="comments" cols="100" rows="5"> </textarea>
+            <button type="submit" class="btn btn-info btn-lg" style="font-size: x-small;">
+                <span class="glyphicon glyphicon-send"></span> comment
+            </button>
+        </div>
+    </form>
+</div>
+<div class="container">
+    {% for comment in comments %}
+    <h6>{{ comment.user.username }}</h6>
+    <h4>{{ comment.comments }}</h4>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+{% endblock %}
